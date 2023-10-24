@@ -9,9 +9,15 @@ import {
   Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Image, DownloadSimple, DotsThreeVertical } from "phosphor-react";
+import {
+  Image as ImageIcon,
+  DownloadSimple,
+  DotsThreeVertical,
+} from "phosphor-react";
 import { Message_options } from "../../data";
 import { useState } from "react";
+import Image from "../Image";
+import { PropTypes } from "prop-types";
 
 const Timeline = ({ msg }) => {
   const theme = useTheme();
@@ -30,7 +36,13 @@ const Timeline = ({ msg }) => {
   );
 };
 
-const TextMessage = ({ msg }) => {
+Timeline.propTypes = {
+  msg: PropTypes.shape({
+    text: PropTypes.string,
+  }),
+};
+
+const TextMessage = ({ msg, menu }) => {
   const theme = useTheme();
   return (
     <Stack
@@ -56,12 +68,22 @@ const TextMessage = ({ msg }) => {
         </Typography>
       </Box>
       {/* options */}
-      <MessageOptions />
+      {menu && <MessageOptions />}
     </Stack>
   );
 };
 
-const MediaMessage = ({ msg }) => {
+TextMessage.propTypes = {
+  msg: PropTypes.shape({
+    text: PropTypes.string,
+    incoming: PropTypes.bool,
+    outgoing: PropTypes.bool,
+    message: PropTypes.string,
+  }),
+  menu: PropTypes.bool,
+};
+
+const MediaMessage = ({ msg, menu }) => {
   const theme = useTheme();
 
   return (
@@ -81,7 +103,7 @@ const MediaMessage = ({ msg }) => {
         }}
       >
         <Stack spacing={1}>
-          <img
+          <Image
             src={msg.img}
             alt={msg.message}
             style={{ maxHeight: 210, borderRadius: "10px" }}
@@ -94,12 +116,23 @@ const MediaMessage = ({ msg }) => {
           </Typography>
         </Stack>
       </Box>
-      <MessageOptions />
+      {menu && <MessageOptions />}
     </Stack>
   );
 };
 
-const ReplyMessage = ({ msg }) => {
+MediaMessage.propTypes = {
+  msg: PropTypes.shape({
+    text: PropTypes.string,
+    incoming: PropTypes.bool,
+    outgoing: PropTypes.bool,
+    message: PropTypes.string,
+    img: PropTypes.string,
+  }),
+  menu: PropTypes.bool,
+};
+
+const ReplyMessage = ({ msg, menu }) => {
   const theme = useTheme();
   return (
     <Stack
@@ -140,12 +173,24 @@ const ReplyMessage = ({ msg }) => {
           </Typography>
         </Stack>
       </Box>
-      <MessageOptions />
+      {menu && <MessageOptions />}
     </Stack>
   );
 };
 
-const LinkMessage = ({ msg }) => {
+ReplyMessage.propTypes = {
+  msg: PropTypes.shape({
+    text: PropTypes.string,
+    incoming: PropTypes.bool,
+    outgoing: PropTypes.bool,
+    message: PropTypes.string,
+    img: PropTypes.string,
+    reply: PropTypes.string,
+  }),
+  menu: PropTypes.bool,
+};
+
+const LinkMessage = ({ msg, menu }) => {
   const theme = useTheme();
 
   return (
@@ -174,7 +219,7 @@ const LinkMessage = ({ msg }) => {
               borderRadius: 1,
             }}
           >
-            <img
+            <Image
               src={msg?.preview}
               alt={msg?.message}
               style={{ maxHeight: 210, borderRadius: "10px" }}
@@ -199,12 +244,23 @@ const LinkMessage = ({ msg }) => {
           </Stack>
         </Stack>
       </Box>
-      <MessageOptions />
+      {menu && <MessageOptions />}
     </Stack>
   );
 };
 
-const DocMessage = ({ msg }) => {
+LinkMessage.propTypes = {
+  msg: PropTypes.shape({
+    text: PropTypes.string,
+    incoming: PropTypes.bool,
+    outgoing: PropTypes.bool,
+    message: PropTypes.string,
+    preview: PropTypes.string,
+  }),
+  menu: PropTypes.bool,
+};
+
+const DocMessage = ({ msg, menu }) => {
   const theme = useTheme();
 
   return (
@@ -234,7 +290,7 @@ const DocMessage = ({ msg }) => {
               borderRadius: 1,
             }}
           >
-            <Image size={48} />
+            <ImageIcon size={48} />
             <Typography variant="caption">Abstract.pdf</Typography>
             <IconButton>
               <DownloadSimple />
@@ -248,9 +304,18 @@ const DocMessage = ({ msg }) => {
           </Typography>
         </Stack>
       </Box>
-      <MessageOptions />
+      {menu && <MessageOptions />}
     </Stack>
   );
+};
+
+DocMessage.propTypes = {
+  msg: PropTypes.shape({
+    incoming: PropTypes.bool,
+    outgoing: PropTypes.bool,
+    message: PropTypes.string,
+  }),
+  menu: PropTypes.bool,
 };
 
 const MessageOptions = () => {

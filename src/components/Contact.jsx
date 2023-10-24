@@ -15,16 +15,26 @@ import {
   X,
 } from "phosphor-react";
 import { useDispatch } from "react-redux";
-import { ToggleSidebar } from "../redux/slices/app";
+import { ToggleSidebar, UpdateSidebarType } from "../redux/slices/app";
 import { faker } from "@faker-js/faker";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Image from "./Image";
 import AntSwitch from "./AntSwitch";
+import { useState } from "react";
+import BlockDialog from "./dialog/BlockDialog";
+import DeleteDialog from "./dialog/DeleteDialog";
 
 const Contact = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const [openBlock, setOpenBlock] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+
+  const handleOpenBlock = () => setOpenBlock(true);
+  const handleCloseBlock = () => setOpenBlock(false);
+  const handleOpenDelete = () => setOpenDelete(true);
+  const handleCloseDelete = () => setOpenDelete(false);
 
   return (
     <Box sx={{ width: 320, height: "100vh" }}>
@@ -109,7 +119,12 @@ const Contact = () => {
             justifyContent={"space-between"}
           >
             <Typography variant={"subtitle2"}>Media, Links & Docs</Typography>
-            <Button endIcon={<CaretRight />}>201</Button>
+            <Button
+              onClick={() => dispatch(UpdateSidebarType("SHARED"))}
+              endIcon={<CaretRight />}
+            >
+              201
+            </Button>
           </Stack>
           <Stack direction={"row"} spacing={2} alignItems={"center"}>
             {[1, 2, 3].map((el) => (
@@ -130,7 +145,7 @@ const Contact = () => {
               <Star size={21} />
               <Typography variant={"subtitle2"}>Starred Message</Typography>
             </Stack>
-            <IconButton>
+            <IconButton onClick={() => dispatch(UpdateSidebarType("STARRED"))}>
               <CaretRight />
             </IconButton>
           </Stack>
@@ -158,15 +173,27 @@ const Contact = () => {
             </Stack>
           </Stack>
           <Stack direction={"row"} alignItems={"center"} spacing={2}>
-            <Button startIcon={<Prohibit />} fullWidth variant={"outlined"}>
+            <Button
+              onClick={handleOpenBlock}
+              startIcon={<Prohibit />}
+              fullWidth
+              variant={"outlined"}
+            >
               Block
             </Button>
-            <Button startIcon={<Trash />} fullWidth variant={"outlined"}>
+            <Button
+              onClick={handleOpenDelete}
+              startIcon={<Trash />}
+              fullWidth
+              variant={"outlined"}
+            >
               Delete
             </Button>
           </Stack>
         </Stack>
       </Stack>
+      <BlockDialog open={openBlock} handleClose={handleCloseBlock} />
+      <DeleteDialog open={openDelete} handleClose={handleCloseDelete} />
     </Box>
   );
 };

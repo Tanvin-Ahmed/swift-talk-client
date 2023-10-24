@@ -22,7 +22,7 @@ const Conversation = () => {
           overflowY: "auto",
         }}
       >
-        <Messages />
+        <Messages menu />
       </Box>
       {/* Chat Footer */}
       <Footer />

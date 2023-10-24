@@ -8,8 +8,9 @@ import {
   TextMessage,
   Timeline,
 } from "./MessageTypes";
+import { PropTypes } from "prop-types";
 
-const Messages = () => {
+const Messages = ({ menu }) => {
   return (
     <Box p={3}>
       <Stack spacing={3} direction={"column"}>
@@ -21,18 +22,17 @@ const Messages = () => {
             case "msg":
               switch (el.subtype) {
                 case "img":
-                  return <MediaMessage key={index} msg={el} />;
+                  return <MediaMessage key={index} msg={el} menu={menu} />;
                 case "doc":
-                  return <DocMessage key={index} msg={el} />;
+                  return <DocMessage key={index} msg={el} menu={menu} />;
                 case "link":
-                  return <LinkMessage key={index} msg={el} />;
+                  return <LinkMessage key={index} msg={el} menu={menu} />;
                 case "reply":
-                  return <ReplyMessage key={index} msg={el} />;
+                  return <ReplyMessage key={index} msg={el} menu={menu} />;
 
                 default:
-                  return <TextMessage key={index} msg={el} />;
+                  return <TextMessage key={index} msg={el} menu={menu} />;
               }
-              break;
 
             default:
               return <></>;
@@ -41,6 +41,10 @@ const Messages = () => {
       </Stack>
     </Box>
   );
+};
+
+Messages.propTypes = {
+  menu: PropTypes.bool,
 };
 
 export default Messages;
