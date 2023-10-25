@@ -2,13 +2,13 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import placeholder from "../assets/Images/placeholder.png";
 import { PropTypes } from "prop-types";
 
-const Image = ({ src, alt, className, onClick, style }) => {
+const Image = ({ src, alt, className, onClick, style, height, width }) => {
   return (
     <LazyLoadImage
       alt={alt}
       src={src}
-      height={"100%"}
-      width={"100%"}
+      height={height}
+      width={width}
       className={className}
       placeholderSrc={placeholder}
       onClick={onClick}
@@ -23,6 +23,8 @@ Image.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
   style: PropTypes.object,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default Image;
