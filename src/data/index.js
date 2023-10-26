@@ -1,5 +1,131 @@
 import { faker } from "@faker-js/faker";
 
+const MemberList = [
+  {
+    id: 0,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: true,
+  },
+  {
+    id: 1,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: false,
+  },
+  {
+    id: 2,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: true,
+  },
+  {
+    id: 3,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: false,
+  },
+  {
+    id: 4,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: true,
+  },
+  {
+    id: 5,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: true,
+  },
+  {
+    id: 6,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: true,
+  },
+  {
+    id: 7,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: true,
+  },
+];
+
+const CallLogList = [
+  {
+    id: 0,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    time: "Yesterday 9:36",
+    missed: false,
+    incoming: true,
+    online: true,
+  },
+  {
+    id: 1,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    time: "Yesterday 12:36",
+    missed: true,
+    incoming: true,
+    online: false,
+  },
+  {
+    id: 2,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    time: "Today 9:36",
+    missed: false,
+    incoming: false,
+    online: true,
+  },
+  {
+    id: 3,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    time: "Today 01:23",
+    missed: false,
+    incoming: false,
+    online: false,
+  },
+  {
+    id: 4,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    time: "Today 02:12",
+    missed: true,
+    incoming: false,
+    online: true,
+  },
+  {
+    id: 5,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    time: "Yesterday 02:12",
+    missed: true,
+    incoming: true,
+    online: true,
+  },
+  {
+    id: 6,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    time: "Yesterday 00:12",
+    missed: true,
+    incoming: false,
+    online: true,
+  },
+  {
+    id: 7,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    time: "Yesterday 00:34",
+    missed: false,
+    incoming: false,
+    online: true,
+  },
+];
+
 const ChatList = [
   {
     id: 0,
@@ -240,4 +366,12 @@ const Shared_Links = [
   },
 ];
 
-export { ChatList, Chat_History, Message_options, Shared_Docs, Shared_Links };
+export {
+  MemberList,
+  CallLogList,
+  ChatList,
+  Chat_History,
+  Message_options,
+  Shared_Docs,
+  Shared_Links,
+};

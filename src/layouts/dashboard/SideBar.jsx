@@ -15,13 +15,18 @@ import { Nav_Buttons, Profile_Menu } from "../../data/menu_data";
 import { faker } from "@faker-js/faker";
 import useSettings from "../../hooks/useSettings";
 import ModeSwitch from "../../components/ModeSwitch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Image from "../../components/Image";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const SideBar = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   const { onToggleMode, themeMode } = useSettings();
 
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState("/app");
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -30,6 +35,10 @@ const SideBar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    setSelected(pathname);
+  }, [pathname]);
 
   return (
     <Box
@@ -57,7 +66,7 @@ const SideBar = () => {
               borderRadius: 1.5,
             }}
           >
-            <img src={Logo} alt="logo" />
+            <Image src={Logo} alt="logo" />
           </Box>
 
           <Stack
@@ -67,7 +76,7 @@ const SideBar = () => {
             spacing={3}
           >
             {Nav_Buttons.map((button) =>
-              button.index === selected ? (
+              button.link === selected ? (
                 <Box
                   key={button.index}
                   sx={{
@@ -75,14 +84,17 @@ const SideBar = () => {
                     borderRadius: 1.5,
                   }}
                 >
-                  <IconButton sx={{ width: "max-content", color: "#fff" }}>
+                  <IconButton
+                    onClick={() => navigate(button.link)}
+                    sx={{ width: "max-content", color: "#fff" }}
+                  >
                     {button.icon}
                   </IconButton>
                 </Box>
               ) : (
                 <IconButton
                   key={button.index}
-                  onClick={() => setSelected(button.index)}
+                  onClick={() => navigate(button.link)}
                   sx={{
                     width: "max-content",
                     color:
@@ -97,20 +109,23 @@ const SideBar = () => {
             )}
             <Divider sx={{ width: "48px" }} />
 
-            {selected === 3 ? (
+            {selected === "/settings" ? (
               <Box
                 sx={{
                   backgroundColor: theme.palette.primary.main,
                   borderRadius: 1.5,
                 }}
               >
-                <IconButton sx={{ width: "max-content", color: "#fff" }}>
+                <IconButton
+                  onClick={() => navigate("/settings")}
+                  sx={{ width: "max-content", color: "#fff" }}
+                >
                   <Gear />
                 </IconButton>
               </Box>
             ) : (
               <IconButton
-                onClick={() => setSelected(3)}
+                onClick={() => navigate("/settings")}
                 sx={{
                   width: "max-content",
                   color:

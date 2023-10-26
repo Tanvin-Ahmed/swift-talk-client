@@ -30,12 +30,12 @@ const Group = () => {
         {/* Left */}
         <Box
           sx={{
-            height: "100vh",
-            bgcolor: (theme) =>
+            position: "relative",
+            width: 320,
+            backgroundColor:
               theme.palette.mode === "light"
                 ? "#f8faff"
-                : theme.palette.background,
-            width: 320,
+                : theme.palette.background.paper,
             boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
           }}
         >
