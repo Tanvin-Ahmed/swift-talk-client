@@ -22,7 +22,7 @@ export const Profile_Menu = [
   {
     title: "Profile",
     icon: <SignOut />,
-    link: "/login",
+    link: "/auth/login",
   },
 ];
 

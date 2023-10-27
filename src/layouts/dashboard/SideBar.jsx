@@ -169,19 +169,48 @@ const SideBar = () => {
             }}
           >
             <Stack spacing={1} px={1}>
-              {Profile_Menu.map((el) => (
-                <MenuItem key={el.title} onClick={handleClose}>
-                  <Stack
-                    direction="row"
-                    sx={{ width: 100 }}
-                    alignItems={"center"}
-                    justifyContent={"space-between"}
+              {Profile_Menu.map((el) =>
+                selected === el.link ? (
+                  <MenuItem
+                    key={el.title}
+                    onClick={() => {
+                      handleClose();
+                    }}
+                    sx={{
+                      backgroundColor: theme.palette.primary.main,
+                      borderRadius: 1.5,
+                    }}
                   >
-                    <span>{el.title}</span>
-                    {el.icon}
-                  </Stack>
-                </MenuItem>
-              ))}
+                    <Stack
+                      direction="row"
+                      sx={{ width: 100, color: "#fff" }}
+                      alignItems={"center"}
+                      justifyContent={"space-between"}
+                    >
+                      <span>{el.title}</span>
+                      {el.icon}
+                    </Stack>
+                  </MenuItem>
+                ) : (
+                  <MenuItem
+                    key={el.title}
+                    onClick={() => {
+                      handleClose();
+                      navigate(el.link);
+                    }}
+                  >
+                    <Stack
+                      direction="row"
+                      sx={{ width: 100 }}
+                      alignItems={"center"}
+                      justifyContent={"space-between"}
+                    >
+                      <span>{el.title}</span>
+                      {el.icon}
+                    </Stack>
+                  </MenuItem>
+                )
+              )}
             </Stack>
           </Menu>
         </Stack>
