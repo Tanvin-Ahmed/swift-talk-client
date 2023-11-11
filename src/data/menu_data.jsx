@@ -20,7 +20,7 @@ export const Profile_Menu = [
     link: "/user-settings",
   },
   {
-    title: "Profile",
+    title: "Logout",
     icon: <SignOut />,
     link: "/auth/login",
   },

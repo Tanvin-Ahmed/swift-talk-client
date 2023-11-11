@@ -4,9 +4,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import Stack from "@mui/material/Stack";
 import Alert from "@mui/material/Alert";
+import Avatar from "@mui/material/Avatar";
 import RHFTextField from "../hook-form/RHFTextField";
 import Button from "@mui/material/Button";
 import { useCallback } from "react";
+import { faker } from "@faker-js/faker";
 
 const Schema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -69,6 +71,18 @@ const ProfileForm = () => {
         {!!errors.afterSubmit && (
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
+
+        <Stack
+          direction={"row"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Avatar
+            sx={{ height: 100, width: 100 }}
+            src={faker.image.avatar()}
+            alt={faker.name.fullName()}
+          />
+        </Stack>
 
         <RHFTextField
           name={"name"}

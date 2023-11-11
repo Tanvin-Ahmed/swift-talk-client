@@ -13,6 +13,8 @@ import { Eye, EyeSlash } from "phosphor-react";
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import { Link as RouterLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../redux/slices/auth";
 
 const Schema = Yup.object().shape({
   email: Yup.string()
@@ -24,6 +26,7 @@ const Schema = Yup.object().shape({
 });
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
   const methods = useForm({
@@ -37,11 +40,9 @@ const LoginForm = () => {
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = methods;
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (data) => {
     try {
-      reset();
+      dispatch(loginUser(data));
     } catch (error) {
       console.log(error);
       reset();

@@ -18,11 +18,14 @@ import ModeSwitch from "../../components/ModeSwitch";
 import { useEffect, useState } from "react";
 import Image from "../../components/Image";
 import { useNavigate, useLocation } from "react-router-dom";
+import { LogoutUser } from "../../redux/slices/auth";
+import { useDispatch } from "react-redux";
 
 const SideBar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
 
   const { onToggleMode, themeMode } = useSettings();
 
@@ -196,7 +199,11 @@ const SideBar = () => {
                     key={el.title}
                     onClick={() => {
                       handleClose();
-                      navigate(el.link);
+                      if (el.title === "Logout") {
+                        dispatch(LogoutUser());
+                      } else {
+                        navigate(el.link);
+                      }
                     }}
                   >
                     <Stack

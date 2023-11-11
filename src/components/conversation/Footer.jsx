@@ -21,8 +21,9 @@ import {
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { useState } from "react";
+import { PropTypes } from "prop-types";
 
-const StyledInput = styled(TextField)(({ theme }) => ({
+const StyledInput = styled(TextField)(() => ({
   "& .MuiInputBase-input": {
     paddingTop: "12px",
     paddingBottom: "12px",
@@ -66,6 +67,9 @@ const ChatInput = ({ setOpenPicker }) => {
   const [openActions, setOpenActions] = useState();
   return (
     <StyledInput
+      multiline
+      rows={1}
+      maxRows={5}
       fullWidth
       placeholder="Write a message..."
       variant="filled"
@@ -80,7 +84,7 @@ const ChatInput = ({ setOpenPicker }) => {
               }}
             >
               {Actions.map((el) => (
-                <Tooltip title={el.title} placement="right">
+                <Tooltip title={el.title} key={el.title} placement="right">
                   <Fab
                     sx={{
                       position: "absolute",
@@ -110,6 +114,10 @@ const ChatInput = ({ setOpenPicker }) => {
       }}
     />
   );
+};
+
+ChatInput.propTypes = {
+  setOpenPicker: PropTypes.bool,
 };
 
 const Footer = () => {
