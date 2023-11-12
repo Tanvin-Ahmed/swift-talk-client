@@ -11,21 +11,26 @@ import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import { Eye, EyeSlash } from "phosphor-react";
 import Button from "@mui/material/Button";
+import { useDispatch } from "react-redux";
+import { resetPassword } from "../../redux/slices/auth";
+import { useSearchParams } from "react-router-dom";
 
 const Schema = Yup.object().shape({
-  newPassword: Yup.string()
+  password: Yup.string()
     .min(8, "Password must be at lest 8 character")
     .required("Password is required"),
-  confirmPassword: Yup.string()
+  passwordConfirm: Yup.string()
     .min(8, "Password must be at lest 8 character")
     .required("Password is required")
     .oneOf(
-      [Yup.ref("newPassword"), null],
+      [Yup.ref("password"), null],
       "Confirm Password must be matched with new password"
     ),
 });
 
 const NewPasswordForm = () => {
+  const dispatch = useDispatch();
+  const [queryParameters] = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
 
   const methods = useForm({
@@ -39,11 +44,10 @@ const NewPasswordForm = () => {
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = methods;
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (data) => {
     try {
-      reset();
+      const token = queryParameters.get("code");
+      dispatch(resetPassword({ ...data, token }));
     } catch (error) {
       console.log(error);
       reset();
@@ -62,7 +66,7 @@ const NewPasswordForm = () => {
         )}
 
         <RHFTextField
-          name={"newPassword"}
+          name={"password"}
           label={"New Password"}
           type={showPassword ? "text" : "password"}
           InputProps={{
@@ -84,7 +88,7 @@ const NewPasswordForm = () => {
           }}
         />
         <RHFTextField
-          name={"confirmPassword"}
+          name={"passwordConfirm"}
           label={"Confirm Password"}
           type={showPassword ? "text" : "password"}
           InputProps={{

@@ -6,6 +6,7 @@ import { store } from "./redux/store.js";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
 import SettingsProvider from "./contexts/SettingsContext.jsx";
+import ToasterProvider from "./components/TosterProvider.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -14,6 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <SettingsProvider>
           <BrowserRouter>
             <App />
+            <ToasterProvider />
           </BrowserRouter>
         </SettingsProvider>
       </HelmetProvider>

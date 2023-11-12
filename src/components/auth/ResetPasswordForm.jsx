@@ -6,6 +6,8 @@ import Stack from "@mui/material/Stack";
 import Alert from "@mui/material/Alert";
 import RHFTextField from "../hook-form/RHFTextField";
 import Button from "@mui/material/Button";
+import { forgotPassword } from "../../redux/slices/auth";
+import { useDispatch } from "react-redux";
 
 const Schema = Yup.object().shape({
   email: Yup.string()
@@ -14,6 +16,7 @@ const Schema = Yup.object().shape({
 });
 
 const ResetPasswordForm = () => {
+  const dispatch = useDispatch();
   const methods = useForm({
     resolver: yupResolver(Schema),
   });
@@ -25,14 +28,10 @@ const ResetPasswordForm = () => {
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = methods;
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (data) => {
     try {
-      reset();
+      dispatch(forgotPassword(data));
     } catch (error) {
-      console.log(error);
-      reset();
       setError("afterSubmit", {
         ...error,
         message: error.message,

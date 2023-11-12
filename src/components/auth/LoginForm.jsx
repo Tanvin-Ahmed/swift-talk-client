@@ -34,18 +34,15 @@ const LoginForm = () => {
   });
 
   const {
-    reset,
     setError,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors },
   } = methods;
 
   const onSubmit = async (data) => {
     try {
       dispatch(loginUser(data));
     } catch (error) {
-      console.log(error);
-      reset();
       setError("afterSubmit", {
         ...error,
         message: error.message,

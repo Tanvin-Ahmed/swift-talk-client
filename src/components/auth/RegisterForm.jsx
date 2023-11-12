@@ -11,6 +11,8 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import RHFTextField from "../hook-form/RHFTextField";
 import { Eye, EyeSlash } from "phosphor-react";
+import { registerUser } from "../../redux/slices/auth";
+import { useDispatch } from "react-redux";
 
 const Schema = Yup.object().shape({
   firstName: Yup.string().required("First Name is required"),
@@ -24,6 +26,7 @@ const Schema = Yup.object().shape({
 });
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
   const methods = useForm({
@@ -31,20 +34,16 @@ const RegisterForm = () => {
   });
 
   const {
-    reset,
     setError,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors },
   } = methods;
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (data) => {
     try {
-      reset();
+      dispatch(registerUser(data));
     } catch (error) {
       console.log(error);
-      reset();
       setError("afterSubmit", {
         ...error,
         message: error.message,

@@ -1,5 +1,4 @@
 import { Link } from "@mui/material";
-import FormProvider from "../../components/hook-form/FormProvider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Link as RouterLink } from "react-router-dom";
@@ -9,7 +8,7 @@ import OrDivider from "../../components/auth/OrDivider";
 
 const Register = () => {
   return (
-    <FormProvider>
+    <>
       <Stack spacing={2} sx={{ mb: 5, position: "relative" }}>
         <Typography variant={"h4"}>Get Start With Swift</Typography>
 
@@ -47,7 +46,7 @@ const Register = () => {
       <OrDivider />
       {/* Social auth */}
       <AuthSocial />
-    </FormProvider>
+    </>
   );
 };
 

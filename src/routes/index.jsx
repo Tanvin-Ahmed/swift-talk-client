@@ -45,6 +45,10 @@ export default function Router() {
           path: "new-password",
           element: <NewPasswordPage />,
         },
+        {
+          path: "verify-otp",
+          element: <VerifyOTPPage />,
+        },
       ],
     },
     {
@@ -76,6 +80,7 @@ const ProfilePage = Loadable(lazy(() => import("../pages/dashboard/Profile")));
 
 const LoginPage = Loadable(lazy(() => import("../pages/auth/Login")));
 const RegisterPage = Loadable(lazy(() => import("../pages/auth/Register")));
+const VerifyOTPPage = Loadable(lazy(() => import("../pages/auth/VerifyOTP")));
 const ResetPasswordPage = Loadable(
   lazy(() => import("../pages/auth/ResetPassword"))
 );
