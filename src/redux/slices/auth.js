@@ -39,9 +39,9 @@ export const registerUser = (formValue) => {
     try {
       dispatch(slice.actions.setLoading(true));
       const { data } = await axios.post("/v1/auth/register", formValue);
-      dispatch(slice.actions.login({ isLoggedIn: true, token: data.token }));
       dispatch(slice.actions.setRegisterEmail(formValue.email));
       toast.success(data.message);
+      window.location.href = "/auth/verify-otp";
     } catch (error) {
       const message = error?.response?.data?.message || error.message;
       toast.error(message);
@@ -99,8 +99,6 @@ export const resetPassword = (formValue) => {
       dispatch(slice.actions.setLoading(true));
       const { data } = await axios.post("/v1/auth/reset-password", formValue);
       dispatch(slice.actions.login({ isLoggedIn: true, token: data.token }));
-      window.location.href = "/auth/verify-otp";
-      console.log(data);
       toast.success(data.message);
     } catch (error) {
       const message = error?.response?.data?.message || error.message;
@@ -121,6 +119,22 @@ export const verifyEmail = (formValue) => {
     } catch (error) {
       const message = error?.response?.data?.message || error.message;
       toast.error(message);
+    }
+  };
+};
+
+export const refreshToken = () => {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await axios("/v1/auth/refresh-token", {
+        headers: { Authorization: "Bearer " + getState().auth.token },
+      });
+      dispatch(slice.actions.login({ isLoggedIn: true, token: data }));
+    } catch (error) {
+      const message = error?.response?.data?.message || error.message;
+      if (message === "Invalid token!") {
+        dispatch(slice.actions.logout());
+      }
     }
   };
 };

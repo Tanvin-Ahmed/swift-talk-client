@@ -6,7 +6,7 @@ import { store } from "./redux/store.js";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
 import SettingsProvider from "./contexts/SettingsContext.jsx";
-import ToasterProvider from "./components/TosterProvider.jsx";
+import ToasterProvider from "./components/ToasterProvider.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
