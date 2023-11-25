@@ -7,6 +7,7 @@ const initialState = {
   token: "",
   isLoading: false,
   email: "",
+  userId: "",
 };
 
 const slice = createSlice({
@@ -16,10 +17,13 @@ const slice = createSlice({
     login: (state, action) => {
       state.isLoggedIn = action.payload.isLoggedIn;
       state.token = action.payload.token;
+      state.userId = action.payload.userId;
     },
     logout: (state) => {
       state.isLoggedIn = false;
       state.token = "";
+      state.email = "";
+      state.userId = "";
     },
     setLoading: (state, action) => {
       state.isLoading = action.payload;
@@ -58,7 +62,13 @@ export const loginUser = (formValue) => {
     try {
       dispatch(slice.actions.setLoading(true));
       const { data } = await axios.post("/v1/auth/login", formValue);
-      dispatch(slice.actions.login({ isLoggedIn: true, token: data.token }));
+      dispatch(
+        slice.actions.login({
+          isLoggedIn: true,
+          token: data.token,
+          userId: data.userId,
+        })
+      );
       dispatch(slice.actions.setRegisterEmail(formValue.email));
       toast.success(data.message);
     } catch (error) {
@@ -98,7 +108,13 @@ export const resetPassword = (formValue) => {
     try {
       dispatch(slice.actions.setLoading(true));
       const { data } = await axios.post("/v1/auth/reset-password", formValue);
-      dispatch(slice.actions.login({ isLoggedIn: true, token: data.token }));
+      dispatch(
+        slice.actions.login({
+          isLoggedIn: true,
+          token: data.token,
+          userId: data.userId,
+        })
+      );
       toast.success(data.message);
     } catch (error) {
       const message = error?.response?.data?.message || error.message;
@@ -114,7 +130,13 @@ export const verifyEmail = (formValue) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post("/v1/auth/verify-otp", formValue);
-      dispatch(slice.actions.login({ isLoggedIn: true, token: data.token }));
+      dispatch(
+        slice.actions.login({
+          isLoggedIn: true,
+          token: data.token,
+          userId: data.userId,
+        })
+      );
       toast.success(data.message);
     } catch (error) {
       const message = error?.response?.data?.message || error.message;
@@ -129,7 +151,13 @@ export const refreshToken = () => {
       const { data } = await axios("/v1/auth/refresh-token", {
         headers: { Authorization: "Bearer " + getState().auth.token },
       });
-      dispatch(slice.actions.login({ isLoggedIn: true, token: data }));
+      dispatch(
+        slice.actions.login({
+          isLoggedIn: true,
+          token: data,
+          userId: data.userId,
+        })
+      );
     } catch (error) {
       const message = error?.response?.data?.message || error.message;
       if (message === "Invalid token!") {
