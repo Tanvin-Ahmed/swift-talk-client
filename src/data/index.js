@@ -129,8 +129,8 @@ const CallLogList = [
 const ChatList = [
   {
     id: 0,
-    img: faker.image.avatar(),
     name: faker.name.firstName(),
+    img: faker.image.avatar(),
     msg: faker.music.songName(),
     time: "9:36",
     unread: 0,

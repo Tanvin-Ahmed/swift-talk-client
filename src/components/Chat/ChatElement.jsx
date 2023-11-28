@@ -2,13 +2,23 @@ import { Avatar, Badge, Box, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { PropTypes } from "prop-types";
 import StyledBadge from "../StyledBadge";
+import { useDispatch } from "react-redux";
+import { selectConversation } from "../../redux/slices/app";
 
-const ChatElement = ({ name, img, msg, time, unread, online }) => {
+const ChatElement = ({ name, img, msg, time, unread, online, id }) => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+
+  const handleSelectConversation = (roomId) => {
+    dispatch(selectConversation(roomId));
+  };
+
   return (
     <Box
+      onClick={() => handleSelectConversation(id)}
       sx={{
         width: "100%",
+        cursor: "pointer",
         height: 60,
         borderRadius: 1,
         backgroundColor:
@@ -65,6 +75,7 @@ ChatElement.propTypes = {
   img: PropTypes.string,
   unread: PropTypes.number,
   online: PropTypes.bool,
+  id: PropTypes.string,
 };
 
 export default ChatElement;

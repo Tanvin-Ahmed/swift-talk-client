@@ -4,17 +4,28 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Stack from "@mui/material/Stack";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserList from "./UserList";
 import FriendList from "./FriendList";
 import FriendRequestList from "./FriendRequestList";
+import { useDispatch } from "react-redux";
+import { clearAllSearchDataFromStorage } from "../../../redux/slices/app";
+import FriendRequestISentList from "./FriendRequestISentList";
 
 const SearchFriendDialog = ({ open, handleClose }) => {
+  const dispatch = useDispatch();
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  // when search dialog is unmounted then all data of the search is removed
+  useEffect(() => {
+    return () => {
+      dispatch(clearAllSearchDataFromStorage());
+    };
+  }, [dispatch]);
 
   return (
     <Dialog
@@ -30,6 +41,7 @@ const SearchFriendDialog = ({ open, handleClose }) => {
           <Tab label="Explore" />
           <Tab label="Friends" />
           <Tab label="Requests" />
+          <Tab label="Requests I sent" />
         </Tabs>
       </Stack>
 
@@ -45,6 +57,8 @@ const SearchFriendDialog = ({ open, handleClose }) => {
                   return <FriendList />;
                 case 2: // display all friend requests
                   return <FriendRequestList />;
+                case 3: // display all friend requests
+                  return <FriendRequestISentList />;
                 default: // display all users
                   return <UserList />;
               }

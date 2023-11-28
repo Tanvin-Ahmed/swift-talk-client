@@ -21,11 +21,19 @@ import {
   StyledInputBase,
 } from "../../components/Search";
 import ChatElement from "../../components/Chat/ChatElement";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchFriendDialog from "../../components/dialog/SearchFriend/SearchFriendDialog";
+import { socket } from "../../socket";
+import { useDispatch, useSelector } from "react-redux";
+import { storeConversions } from "../../redux/slices/conversation";
 
 const Chats = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const { userId } = useSelector((state) => state.auth);
+  const { conversations } = useSelector(
+    (state) => state.conversation.directChat
+  );
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleOpenDialog = () => {
@@ -34,6 +42,15 @@ const Chats = () => {
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
+
+  useEffect(() => {
+    if (socket) {
+      socket.emit("get_direct_conversations", { userId }, (data) => {
+        // data => list of conversations
+        dispatch(storeConversions(data));
+      });
+    }
+  }, [userId, dispatch]);
 
   return (
     <>
@@ -97,9 +114,11 @@ const Chats = () => {
                 <Typography variant="subtitle2" sx={{ color: "#676767" }}>
                   All Chats
                 </Typography>
-                {ChatList.filter((c) => !c.pinned).map((chat) => (
-                  <ChatElement key={chat.id} {...chat} />
-                ))}
+                {conversations
+                  .filter((c) => !c.pinned)
+                  .map((chat) => (
+                    <ChatElement key={chat.id} {...chat} />
+                  ))}
               </Stack>
             </SimpleBarStyle>
           </Stack>
